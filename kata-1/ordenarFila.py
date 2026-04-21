@@ -62,9 +62,25 @@ resultado = organizar_pacientes(pacientes);
 # for p in resultado:
 #     print(f"Nome: {p['nome']} | Idade: {p['idade']} | Urgência: {p['urgencia']} | Chegada: {p['chegada'].strftime('%H:%M')}");
 
+# Impressão a lista inicial
+print("=" * 40);
+print("Lista inicial");
+print("=" * 40);
+
+print(f"{'Nome': <10} {'Idade': <6} {'Urgência':<10} {'Chegada':<8}");
+print("-" * 40);
+
+for paciente in pacientes:
+    print(f"{paciente['nome']:<10} {paciente['idade']:<6} {paciente['urgencia']:<10} {paciente['chegada'].strftime('%H:%M'):<8}");
+
+print("=" * 40);
+
+print("Lista organizada");
+print("=" * 40);
+
 # Impressão dos resultados em forma de tabelas
-print(f"{'Nome': <10} {'Idade': <6} {'Urgência':<10} {'Chegada':<8}")
-print("-" * 40)
+print(f"{'Nome': <10} {'Idade': <6} {'Urgência':<10} {'Chegada':<8}");
+print("-" * 40);
 
 for p in resultado:
-    print(f"{p['nome']:<10} {p['idade']:<6} {p['urgencia']:<10} {p['chegada'].strftime('%H:%M'):<8}")
+    print(f"{p['nome']:<10} {p['idade']:<6} {p['urgencia']:<10} {p['chegada'].strftime('%H:%M'):<8}");
