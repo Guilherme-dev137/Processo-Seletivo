@@ -1,0 +1,7 @@
+Neste projeto, utilizei estruturas de dados do Python baseadas em listas e dicionários, formando uma lista de dicionários para armazenar as informações dos pacientes. A lista foi escolhida por permitir o uso da função sorted(), que realiza a ordenação e retorna uma nova lista organizada. Já os dicionários facilitam a estruturação dos dados, tornando mais simples a implementação das regras de negócio e a adição de novos campos no futuro.
+
+A solução utiliza um algoritmo de ordenação com complexidade O(n log n), o que garante um crescimento eficiente e escalável. Isso significa que, mesmo com grandes volumes de dados (por exemplo, 1 milhão de pacientes), o tempo de processamento aumenta de forma controlada, sem causar travamentos ou degradação significativa no desempenho do sistema.
+
+As regras 4 e 5 não interagem entre si na implementação atual, pois são tratadas com uma estrutura if/elif, garantindo que apenas uma delas seja aplicada por vez. Além disso, essas regras são naturalmente exclusivas, já que uma se aplica a pacientes com 60 anos ou mais e a outra a menores de 18 anos.
+
+Atualmente, as regras de negócio estão implementadas com if/else, o que exige a modificação da função principal sempre que uma nova regra é adicionada. Como melhoria, seria mais adequado separar cada regra em funções independentes. Dessa forma, novas regras podem ser incluídas com facilidade, sem alterar o código existente, tornando a solução mais organizada, escalável e alinhada com boas práticas de desenvolvimento.
