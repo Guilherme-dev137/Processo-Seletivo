@@ -1,33 +1,68 @@
-# Importação do script para criar o banco de dados
-from criarDB import criar_banco
-
-# Importação da função para salvar os valores no banco de dados
-from criarDB import salvar_pacientes
-
-# Importação da função para coletar as informações do banco de dados
-from criarDB import listar_pacientes
-
-# Importação do datetime para trabalhar com o campo "chegada"
 from datetime import datetime
 
-# Criação do banco de dados
-criar_banco();
+from criarDB import criar_banco
+from criarDB import listar_pacientes
+from criarDB import salvar_pacientes
 
-# Informações dos pacientes cadastrados no dia para atendimento
+
+criar_banco()
+
 pacientes = [
-    {"nome": "Ana", "idade": 25, "urgencia": "media", "chegada": "12:30", "atendimento": "null"},
-    {"nome": "Lucas", "idade": 20, "urgencia": "alta", "chegada": "13:00", "atendimento": "null"},
-    {"nome": "João", "idade": 50, "urgencia": "critica", "chegada": "15:00", "atendimento": "null"},
-    {"nome": "Maria", "idade": 30, "urgencia": "baixa", "chegada": "14:00", "atendimento": "null"},
-    {"nome": "Antonio", "idade": 23, "urgencia": "alta", "chegada": "12:20", "atendimento": "null"},
-    {"nome": "Jose", "idade": 63, "urgencia": "media", "chegada": "15:20", "atendimento": "null"},
-    {"nome": "Eduardo", "idade": 15, "urgencia": "baixa", "chegada": "16:40", "atendimento": "null"},
-];
+    {
+        "nome": "Ana",
+        "idade": 25,
+        "urgencia": "media",
+        "chegada": "12:30",
+        "atendimento": None
+    },
+    {
+        "nome": "Lucas",
+        "idade": 20,
+        "urgencia": "alta",
+        "chegada": "13:00",
+        "atendimento": None
+    },
+    {
+        "nome": "Joao",
+        "idade": 50,
+        "urgencia": "critica",
+        "chegada": "15:00",
+        "atendimento": None
+    },
+    {
+        "nome": "Maria",
+        "idade": 30,
+        "urgencia": "baixa",
+        "chegada": "14:00",
+        "atendimento": None
+    },
+    {
+        "nome": "Antonio",
+        "idade": 23,
+        "urgencia": "alta",
+        "chegada": "12:20",
+        "atendimento": None
+    },
+    {
+        "nome": "Jose",
+        "idade": 63,
+        "urgencia": "media",
+        "chegada": "15:20",
+        "atendimento": None
+    },
+    {
+        "nome": "Eduardo",
+        "idade": 15,
+        "urgencia": "baixa",
+        "chegada": "16:40",
+        "atendimento": None
+    }
+]
 
-for p in pacientes:
-    p["chegada"] = datetime.strptime(p["chegada"], "%H:%M")
+for paciente in pacientes:
+    paciente["chegada"] = datetime.strptime(paciente["chegada"], "%H:%M")
 
-# Função para realizar a organização dos pacientes
+
 def organizar_pacientes(lista):
     prioridade = {
         "critica": 0,
@@ -36,50 +71,50 @@ def organizar_pacientes(lista):
         "baixa": 3
     }
 
-    def ajustar_prioridade(p):
-        urgencia_original = p["urgencia"]
+    def ajustar_prioridade(paciente):
+        urgencia_original = paciente["urgencia"]
 
-        # Regra 4: idoso(+60) com média vira alta
-        if p.get("idade", 0) >= 60 and urgencia_original == "media":
-            p["urgencia"] = "alta"
-
-        # Regra 5: menor de 18 sobe um nível
-        elif p.get("idade", 0) < 18:
+        if paciente.get("idade", 0) >= 60 and urgencia_original == "media":
+            paciente["urgencia"] = "alta"
+        elif paciente.get("idade", 0) < 18:
             if urgencia_original == "baixa":
-                p["urgencia"] = "media"
+                paciente["urgencia"] = "media"
             elif urgencia_original == "media":
-                p["urgencia"] = "alta"
+                paciente["urgencia"] = "alta"
             elif urgencia_original == "alta":
-                p["urgencia"] = "critica"
+                paciente["urgencia"] = "critica"
 
-        return prioridade.get(p["urgencia"], 99)
-    
+        return prioridade.get(paciente["urgencia"], 99)
+
+    return sorted(lista, key=lambda paciente: (ajustar_prioridade(paciente), paciente["chegada"]))
 
 
-    return sorted(
-        lista,
-        key=lambda p: (ajustar_prioridade(p), p["chegada"])
+resultado = organizar_pacientes(pacientes)
+
+pacientes_para_banco = []
+for paciente in resultado:
+    pacientes_para_banco.append(
+        {
+            "nome": paciente["nome"],
+            "idade": paciente["idade"],
+            "urgencia": paciente["urgencia"],
+            "chegada": paciente["chegada"].strftime("%H:%M"),
+            "atendimento": paciente["atendimento"]
+        }
     )
 
-# Chamada da função, valores do filtro serão armazenadas em outra variável para depois ser impresso na tela
-resultado = organizar_pacientes(pacientes);
+salvar_pacientes(pacientes_para_banco)
 
-# Execução da função para salvar os valores dos pacientes no banco
-salvar_pacientes(resultado);
+pacientes_salvos = listar_pacientes()
 
-# Impressão dos resultados sem tratamento
-# for paciente in resultado:
-#     paciente_exibicao = paciente.copy()
-#     paciente_exibicao["chegada"] = paciente["chegada"].strftime("%H:%M")
-#     print(paciente_exibicao);
+print(f"{'ID':<4} {'Nome':<10} {'Idade':<6} {'Urgencia':<10} {'Chegada':<8}")
+print("-" * 46)
 
-# Impressão dos resultados mais organizados
-# for p in resultado:
-#     print(f"Nome: {p['nome']} | Idade: {p['idade']} | Urgência: {p['urgencia']} | Chegada: {p['chegada'].strftime('%H:%M')}");
-
-# Impressão dos resultados em forma de tabelas
-print(f"{'Nome': <10} {'Idade': <6} {'Urgência':<10} {'Chegada':<8}")
-print("-" * 40)
-
-for p in resultado:
-    print(f"{p['nome']:<10} {p['idade']:<6} {p['urgencia']:<10} {p['chegada'].strftime('%H:%M'):<8}")
+for paciente in pacientes_salvos:
+    print(
+        f"{paciente['id']:<4} "
+        f"{paciente['nome']:<10} "
+        f"{paciente['idade']:<6} "
+        f"{paciente['urgencia']:<10} "
+        f"{paciente['chegada']:<8}"
+    )
