@@ -1,0 +1,23 @@
+.task-card__body {
+  min-height: 100%;
+}
+
+.task-card__content {
+  min-height: 180px;
+}
+
+.task-card__controls {
+  padding-top: 8px;
+}
+
+.task-card__title {
+  word-break: break-word;
+  line-height: 1.35;
+  max-width: 100%;
+  min-height: 56px;
+}
+
+.task-card__description {
+  min-height: 72px;
+  word-break: break-word;
+}
