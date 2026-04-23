@@ -1,0 +1,16 @@
+﻿indicador;detalhe;valor;unidade
+Total de pedidos por status;Aprovado;4;pedidos
+Total de pedidos por status;Cancelado;1;pedidos
+Total de pedidos por status;Nao Informado;1;pedidos
+Total de pedidos por status;Pendente;1;pedidos
+Ticket medio por estado;MG;Nao disponivel;R$
+Ticket medio por estado;Nao informado;450,20;R$
+Ticket medio por estado;PR;120,90;R$
+Ticket medio por estado;RS;89,99;R$
+Ticket medio por estado;SP;217,08;R$
+Percentual de entregas;Com atraso;66,67;%
+Percentual de entregas;No prazo;33,33;%
+Top 3 cidades com maior volume de pedidos;1o lugar - Sao Paulo;3;pedidos
+Top 3 cidades com maior volume de pedidos;2o lugar - Belo Horizonte;1;pedidos
+Top 3 cidades com maior volume de pedidos;3o lugar - Curitiba;1;pedidos
+Media de atraso para pedidos com atraso;Pedidos com atraso;1;dias
